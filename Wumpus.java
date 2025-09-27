@@ -2,7 +2,7 @@ package edu.ilstu;
 
 import java.util.Scanner;
 
-public class Main02
+public class Wumpus
 {
 
 	public static void main(String[] args)
