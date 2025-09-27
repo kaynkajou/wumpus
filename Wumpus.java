@@ -12,10 +12,16 @@ public class Wumpus
 		char movement;
 		boolean go = true;
 
-		// sets up map
+		// sets up visible map
 		MazeMapService wumpusWorld = new MazeMapService();
 		wumpusWorld.resetMap();
 		wumpusWorld.showMap();
+		// sets up hidden map
+		MonsterMapService hiddenWorld = new MonsterMapService();
+		hiddenWorld.resetMap();
+		hiddenWorld.addMonster();// doesn't add monster correctly when near edge
+		System.out.println("Hidden Map: ");
+		hiddenWorld.showMap();
 
 		while (go)
 		{
