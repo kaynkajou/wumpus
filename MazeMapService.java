@@ -10,21 +10,59 @@ public class MazeMapService
 
 	}
 
-	public String getOptions()
+	public String getOptions(char roomAt)
 	{
 		String options = "\nFeel free to move: ";
-		if (xLocation != 0)
-			options += "\nleft(a)";
-		if (yLocation != 0)
-			options += "\nup(w)";
-		if (xLocation != 4)
-			options += "\nright(d)";
-		if (yLocation != 4)
-			options += "\ndown(s)";
-		return options + ".";
+		if (roomAt != 'w')
+		{
+			if (xLocation != 0)
+			{
+				options += "\nleft(a)";
+			}
+			if (yLocation != 0)
+			{
+				options += "\nup(w)";
+			}
+			if (xLocation != 4)
+			{
+				options += "\nright(d)";
+			}
+			if (yLocation != 4)
+			{
+				options += "\ndown(s)";
+			}
+			if (roomAt == 's')
+			{
+				options += "\nyou smell something...";
+			}
+		} else
+		{
+			return "YOU BEEN WUMPUSSED!!!";
+		}
+		return options;
 	}
 
-	public void setLocation(char movement)
+	public int getX()
+	{
+		return xLocation;
+	}
+
+	public int getY()
+	{
+		return yLocation;
+	}
+
+	public int getOldX()
+	{
+		return oldXLocation;
+	}
+
+	public int getOldY()
+	{
+		return oldYLocation;
+	}
+
+	public void setLocation(char movement, char roomUnder)
 	{
 		oldXLocation = xLocation;// saves old x position
 		oldYLocation = yLocation;// saves old y position
@@ -42,7 +80,17 @@ public class MazeMapService
 
 		// updates map
 		mazeMap.set(xLocation, yLocation, 'o');
-		mazeMap.set(oldXLocation, oldYLocation, '_');
+		if (roomUnder == 's')
+		{
+			mazeMap.set(oldXLocation, oldYLocation, 's');
+		} else if (roomUnder == 'w')
+		{
+			mazeMap.set(oldXLocation, oldYLocation, 'w');
+		} else
+		{
+			mazeMap.set(oldXLocation, oldYLocation, '_');
+		}
+
 	}
 
 	public void resetMap()

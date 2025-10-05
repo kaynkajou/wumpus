@@ -9,7 +9,6 @@ public class Wumpus
 	{
 		// sets up main variables
 		Scanner input = new Scanner(System.in);
-		char movement;
 		boolean go = true;
 
 		// sets up visible map
@@ -19,15 +18,22 @@ public class Wumpus
 		// sets up hidden map
 		MonsterMapService hiddenWorld = new MonsterMapService();
 		hiddenWorld.resetMap();
-		hiddenWorld.addMonster();// doesn't add monster correctly when near edge
-		System.out.println("Hidden Map: ");
-		hiddenWorld.showMap();
+		hiddenWorld.addMonster();
+		System.out.println(wumpusWorld.getOptions(hiddenWorld.getRoom(wumpusWorld.getX(), wumpusWorld.getY())));
+		// System.out.println("Hidden Map: ");
+		// hiddenWorld.showMap(); for testing
 
 		while (go)
 		{
-			System.out.println(wumpusWorld.getOptions());
-			wumpusWorld.setLocation(input.next().charAt(0));
+			wumpusWorld.setLocation(input.next().charAt(0),
+					hiddenWorld.getRoom(wumpusWorld.getX(), wumpusWorld.getY()));// sets location
 			wumpusWorld.showMap();
+			System.out.println(wumpusWorld.getOptions(hiddenWorld.getRoom(wumpusWorld.getX(), wumpusWorld.getY())));// gives
+			// options
+			if (hiddenWorld.getRoom(wumpusWorld.getX(), wumpusWorld.getY()) == 'w')
+			{
+				go = false;
+			}
 		}
 
 	}
