@@ -24,7 +24,12 @@ public class MonsterMapService
 			options += "\nright(d)";
 		if (yLocation != 4)
 			options += "\ndown(s)";
-		return options + ".";
+		return options;
+	}
+
+	public char getRoom(int x, int y)
+	{
+		return mazeMap.get(x, y);
 	}
 
 	public void setLocation(char movement)
