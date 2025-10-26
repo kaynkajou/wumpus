@@ -24,4 +24,14 @@ public class MazeMap
 		map[x][y] = type;
 	}
 
+	public int getXLength()
+	{
+		return map.length;
+	}
+
+	public int getYLength()
+	{
+		return map[0].length;
+	}
+
 }
