@@ -5,26 +5,17 @@ import java.util.Random;
 public class MonsterMapService
 {
 	Random rand = new Random();
-	MazeMap mazeMap = new MazeMap();
+	private MazeMap mazeMap;
 	private int xLocation, yLocation, oldXLocation, oldYLocation, monsterXLocation, monsterYLocation;
 
 	public MonsterMapService()
 	{
-
+		mazeMap = new MazeMap();
 	}
 
-	public String getOptions()
+	public MonsterMapService(int xLength, int yLength)
 	{
-		String options = "\nFeel free to move: ";
-		if (xLocation != 0)
-			options += "\nleft(a)";
-		if (yLocation != 0)
-			options += "\nup(w)";
-		if (xLocation != 4)
-			options += "\nright(d)";
-		if (yLocation != 4)
-			options += "\ndown(s)";
-		return options;
+		mazeMap = new MazeMap(xLength, yLength);
 	}
 
 	public char getRoom(int x, int y)
@@ -55,9 +46,9 @@ public class MonsterMapService
 
 	public void resetMap()
 	{
-		for (int y = 0; y < 5; y++)
+		for (int y = 0; y < mazeMap.getYLength(); y++)
 		{
-			for (int x = 0; x < 5; x++)
+			for (int x = 0; x < mazeMap.getXLength(); x++)
 			{
 				mazeMap.set(x, y, 'x');
 			}
@@ -67,8 +58,8 @@ public class MonsterMapService
 
 	public void addMonster()
 	{
-		monsterXLocation = rand.nextInt(4);
-		monsterYLocation = rand.nextInt(4);
+		monsterXLocation = rand.nextInt(mazeMap.getXLength() - 3) + 2;
+		monsterYLocation = rand.nextInt(mazeMap.getYLength() - 3) + 2;
 		// adds new location to map
 
 		mazeMap.set(monsterXLocation, monsterYLocation, 'w');
@@ -77,7 +68,7 @@ public class MonsterMapService
 		{
 			mazeMap.set(monsterXLocation - 1, monsterYLocation, 's');
 		}
-		if (monsterXLocation != 4)
+		if (monsterXLocation != (mazeMap.getXLength() - 1))
 		{
 			mazeMap.set(monsterXLocation + 1, monsterYLocation, 's');
 		}
@@ -85,9 +76,51 @@ public class MonsterMapService
 		{
 			mazeMap.set(monsterXLocation, monsterYLocation - 1, 's');
 		}
-		if (monsterYLocation != 4)
+		if (monsterYLocation != (mazeMap.getYLength() - 1))
 		{
 			mazeMap.set(monsterXLocation, monsterYLocation + 1, 's');
+		}
+	}
+
+	public void addMonster(char obstical, char warning)
+	{
+		monsterXLocation = rand.nextInt(mazeMap.getXLength() - 3) + 2;
+		monsterYLocation = rand.nextInt(mazeMap.getYLength() - 3) + 2;
+		// adds new location to map
+
+		mazeMap.set(monsterXLocation, monsterYLocation, obstical);
+
+		if (monsterXLocation != 0)
+		{
+			mazeMap.set(monsterXLocation - 1, monsterYLocation, warning);
+		}
+		if (monsterXLocation != (mazeMap.getXLength() - 1))
+		{
+			mazeMap.set(monsterXLocation + 1, monsterYLocation, warning);
+		}
+		if (monsterYLocation != 0)
+		{
+			mazeMap.set(monsterXLocation, monsterYLocation - 1, warning);
+		}
+		if (monsterYLocation != (mazeMap.getYLength() - 1))
+		{
+			mazeMap.set(monsterXLocation, monsterYLocation + 1, warning);
+		}
+	}
+
+	public void addMultiple(int amount)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			addMonster();
+		}
+	}
+
+	public void addMultiple(int amount, char obstical, char warning)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			addMonster(obstical, warning);
 		}
 	}
 
@@ -97,9 +130,9 @@ public class MonsterMapService
 		{
 			System.out.println();
 		}
-		for (int y = 0; y < 5; y++)
+		for (int y = 0; y < mazeMap.getYLength(); y++)
 		{
-			for (int x = 0; x < 5; x++)
+			for (int x = 0; x < mazeMap.getXLength(); x++)
 			{
 				System.out.print(mazeMap.get(x, y) + " ");
 			}
